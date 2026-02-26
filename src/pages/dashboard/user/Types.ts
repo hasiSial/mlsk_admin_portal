@@ -116,8 +116,22 @@ export interface EmergencyContacts {
   
 }
 
+export interface FamilyMembers {
+  userFamilyId: number;
+  name: string;
+  nickName: string | null;
+  genderId: string;
+  gender: string;
+  dateOfBirth: string; 
+  isSelf: boolean;
+  hasBirthMark: boolean;
+  birthMark: string | null;
+  isActive: boolean;
+  createdAt: string; 
+}
+
 export interface SingleUserResponse {
   user: singleUserType;
   emergencyContacts: EmergencyContacts[];
-  familyMembers:any
+  familyMembers:FamilyMembers[]
 }
