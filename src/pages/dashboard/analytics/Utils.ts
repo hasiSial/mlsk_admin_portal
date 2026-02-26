@@ -1,0 +1,53 @@
+export const analytics = {
+  //   bookingOverTime: [
+  //     { name: 'Jan', value: 12 },
+  //     { name: 'Feb', value: 28 },
+  //     { name: 'Mar', value: 25 },
+  //     { name: 'Apr', value: 33 },
+  //     { name: 'May', value: 31 },
+  //     { name: 'Jun', value: 68 },
+  //     { name: 'Jul', value: 12 },
+  //     { name: 'Aug', value: 21 },
+  //     { name: 'Sep', value: 19 },
+  //     { name: 'Oct', value: 14 },
+  //     { name: 'Nov', value: 65 },
+  //     { name: 'Dec', value: 49 },
+  //   ],
+  bookingOverTime: [
+    { name: 'Week 1', new: 22, complete: 18, cancel: 4 },
+    { name: 'Week 2', new: 28, complete: 20, cancel: 6 },
+    { name: 'Week 3', new: 33, complete: 25, cancel: 5 },
+    { name: 'Week 4', new: 40, complete: 30, cancel: 8 },
+    { name: 'Week 5', new: 37, complete: 32, cancel: 7 },
+    { name: 'Week 6', new: 45, complete: 38, cancel: 5 },
+    { name: 'Week 7', new: 50, complete: 40, cancel: 9 },
+    { name: 'Week 8', new: 42, complete: 35, cancel: 6 },
+  ],
+  revenueByCategory: [
+    { name: 'Rental Fees', value: 700, color: '#19354D' },
+    { name: 'Service Fees', value: 200, color: '#AB202B' },
+    { name: 'Other', value: 100, color: '#4CAF50' },
+  ],
+
+  revenueByMonthlyTrend: [
+    { name: 'Jan', value: 10 },
+    { name: 'Feb', value: 12 },
+    { name: 'Mar', value: 15 },
+    { name: 'Apr', value: 12 },
+    { name: 'May', value: 15 },
+    { name: 'Jun', value: 16 },
+    { name: 'Jul', value: 19 },
+    { name: 'Aug', value: 17 },
+    { name: 'Sep', value: 20 },
+    { name: 'Oct', value: 21 },
+    { name: 'Nov', value: 22 },
+    { name: 'Dec', value: 25 },
+  ],
+
+  bookedByPondType: [
+    { name: 'Lake', value: 320 },
+    { name: 'River', value: 180 },
+    { name: 'Pond', value: 240 },
+    { name: 'Creek', value: 136 },
+  ],
+};

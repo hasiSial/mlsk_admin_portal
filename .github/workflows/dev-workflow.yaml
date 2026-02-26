@@ -1,0 +1,41 @@
+name: Build and deploy player portal app to Azure Web App
+
+on:
+  push:
+    branches:
+      - release/dev
+  workflow_dispatch:
+
+env:
+  APPLICATION_PUBLISH_PROFILE: ${{ secrets.APP_PUBLISH_PROFILE_DEV }}
+  AZURE_WEBAPP_PACKAGE_PATH: .
+  WEBAPP_NAME: "dev-fishrook-frontend"
+  # VITE_BASE_URL: "https://dev-fishrook-frontend-evaaetarc3gjatc5.centralus-01.azurewebsites.net"
+  VITE_API_BASE_URL: "https://dev-fishrook-be-fwf4aef0gxdagzcc.centralus-01.azurewebsites.net/api"
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: https://index.docker.io/v1/
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - run: |
+        
+        
+        echo "VITE_API_BASE_URL=${{env.VITE_API_BASE_URL}}" >> .env
+        docker build . -t ${{ secrets.DOCKER_REG }}:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_REG }}:${{ github.sha }}     
+
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.WEBAPP_NAME }}
+        publish-profile: ${{ secrets.APP_PUBLISH_PROFILE_DEV }}
+        images: '${{ secrets.DOCKER_REG }}:${{ github.sha }}'
