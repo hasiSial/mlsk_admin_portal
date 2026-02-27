@@ -39,11 +39,17 @@ const RoutesComponent: React.FC = () => {
     >
       <Routes>
         {/* redirect root */}
-        {/* <Route path="/" element={<Navigate to="/dashboard/home" replace />} /> */}
-        <Route path="/" element={<Navigate to="/auth/login" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard/home" replace />} />
+        {/* <Route path="/" element={<Navigate to="/auth/login" replace />} /> */}
 
         {/* ================= AUTH ================= */}
-        <Route path="/auth" element={<LayoutWrapper type="auth" />}>
+        <Route path="/auth" 
+          element={  
+            <AuthGuard>
+              <LayoutWrapper type="auth" />
+            </AuthGuard>
+          }
+        >
           <Route index element={<Navigate to="login" replace />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
@@ -53,7 +59,13 @@ const RoutesComponent: React.FC = () => {
         </Route>
 
         {/* ================= DASHBOARD ================= */}
-        <Route path="/dashboard" element={<LayoutWrapper type="dashboard" />}>
+        <Route path="/dashboard" 
+          element={
+            <AuthGuard>
+              <LayoutWrapper type="dashboard" />
+            </AuthGuard>
+          }
+        >
           <Route index element={<Navigate to="home" replace />} />
           <Route path="home" element={<HomePage />} />
 
