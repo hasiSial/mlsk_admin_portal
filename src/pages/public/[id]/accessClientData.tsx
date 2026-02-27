@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,15 +8,13 @@ import { useAppDispatch } from '@/redux/Hooks';
 import { getAccessClientDependentFamilyData, getAccessParentData } from '@/redux/accessRequest/slice';
 import AccessClientDependentsOverview from '@/components/features/accessClientRequest/accessClientDependents';
 import AccessClientCategoriesOverview from '@/components/features/accessClientRequest/accessClientCategories';
-import { DemoClientDocuments } from '../Utils';
-import Icon from '@/components/ui/svg_icon/SvgIcon';
+import AccessClientDocumentsOverview from '@/components/features/accessClientRequest/accessClientDocuments';
 
 const AccessClientDataPage = () => {
   const { uuid } = useParams();
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState('Medical Info');
   const tabs = ['Medical Info', 'Dependents Info', 'Documents'];
-  const navigate = useNavigate();
   const [userInfoRecord, setUserInfoRecord] = useState<ParentInfo | null>(null);
   const [dependentsFamilyRecord, setDependentsFamilyRecord] = useState<ParentCategories[] | null>(null);
 
@@ -59,7 +57,8 @@ const AccessClientDataPage = () => {
 
   return (
     <>
-      {userInfoRecord ? (
+      {userInfoRecord &&
+      // (
         <div className="min-h-screen p-3 sm:p-4 md:p-6 bg-neutral-200">
           <div className="w-full h-full roundedDefault p-4 sm:p-5 md:p-6 bg-white">
             <h2 className="text-xl sm:text-2xl font-bold text-start">Own Health Information</h2>
@@ -163,34 +162,20 @@ const AccessClientDataPage = () => {
               </TabsContent>
 
               <TabsContent className="shadow-none overflow-x-auto" value="Documents">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                  {DemoClientDocuments.map((item: any) => (
-                    <div className="bg-specificCard border border-borderDefault2 rounded-lg gap-3 px-3 py-4">
-                      <h4 className="text-textDefault font-semibold text-sm md:text-base">{item?.title ?? ''}</h4>
-                      <div className="space-y-3 mt-3">
-                        {item?.docs.map((data: any) => (
-                          <div className="bg-primary-50 border border-[#99B9D1] p-[6px] rounded-[6px] flex items-center justify-between">
-                            <div className="text-primary flex items-center justify-start gap-1">
-                              <Icon icon="/icons/doc.svg" fill={false} stroke={true} />
-                              <span className="text-sm font-medium">{data?.label}</span>
-                            </div>
-                            <Icon icon="/icons/eye.svg" fill={false} stroke={true} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  <AccessClientDocumentsOverview  
+                    familyId={userInfoRecord?.familyId}
+                  />
               </TabsContent>
             </Tabs>
           </div>
         </div>
-      ) : (
-        <p className="text-center h-screen flex items-center justify-center text-base font-medium text-text-500">
-          You don't have access yet. We've sent an SMS to Elias Vance. Once they approve,
-          <br /> you'll be able to access this page.
-        </p>
-      )}
+      // ) : (
+      //   <p className="text-center h-screen flex items-center justify-center text-base font-medium text-text-500">
+      //     You don't have access yet. We've sent an SMS to Elias Vance. Once they approve,
+      //     <br /> you'll be able to access this page.
+      //   </p>
+      // )
+      }
     </>
   );
 };

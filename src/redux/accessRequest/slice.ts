@@ -1,8 +1,10 @@
 import { customToast } from '@/common/showToast';
 import {
   createRequestClientDataAccessHandler,
+  deleteClientAccessDocumentsHandler,
   getAccessClientAccountDependentsHandler,
   getAccessClientDependentFamilyDataHandler,
+  getAccessClientDocumentsDataHandler,
   getAccessClientSingleCategoryDataHandler,
   getAccessParentDataHandler,
   getClientDependentDocumentsDetail,
@@ -10,6 +12,7 @@ import {
   getClientDependentLifeStyleDetail,
   getClientDependentMedicineDetail,
   getClientDependentVaccinationDetail,
+  updateClientAccessDocumentsHandler,
 } from '@/services/accessRequest/accessRequest';
 import type { Pagination } from '@/utils/Types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -52,6 +55,63 @@ export const getAccessClientAccountDependents = createAsyncThunk('getAccessClien
     return rejectWithValue(message);
   }
 });
+
+export const getAccessClientDocumentsData = createAsyncThunk(
+  'getAccessClientDocumentsData',
+  async ({ uuid, familyId }: { uuid: string; familyId: number }, { rejectWithValue }) => {
+    try {
+      const response = await getAccessClientDocumentsDataHandler(uuid, familyId);
+      return response?.data || [];
+    } catch (error: any) {
+      const message = error?.response?.data?.message || error?.message || 'Something went wrong';
+
+      customToast.error(message);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const deleteClientAccessDocument = createAsyncThunk('deleteClientAccessDocument', 
+  async ({ uuid, documentSectionUploadId }: { uuid: string; documentSectionUploadId: number }, { rejectWithValue }) => {
+  try {
+    const response = await deleteClientAccessDocumentsHandler(uuid,documentSectionUploadId);
+    return response.data || [];
+  } catch (error: any) {
+    const message = error?.response?.data?.message || error?.message || 'Something went wrong';
+    customToast.error(message);
+    return rejectWithValue(message);
+  }
+});
+
+export const updateClientAccessDocuments = createAsyncThunk(
+  'updateClientAccessDocuments',
+  async (
+    {
+      uuid,
+      documentSectionId,
+      payload,
+    }: {
+      uuid: string;
+      documentSectionId: number;
+      payload: {
+        dependentId: number | null;
+        sortId: number;
+        title: string;
+        files: { filePath: string; fileName: string }[];
+      };
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await updateClientAccessDocumentsHandler(uuid, documentSectionId, payload);
+      return response.data || [];
+    } catch (error: any) {
+      const message = error?.response?.data?.message || error?.message || 'Something went wrong';
+      customToast.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
 
 export const getAccessParentData = createAsyncThunk('getAccessParentData', async (uuid: string, { rejectWithValue }) => {
   try {

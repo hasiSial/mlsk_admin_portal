@@ -11,6 +11,19 @@ export interface ClientDependent {
   };
 }
 
+export interface UploadDocumentsType {
+  userDocumentSectionUploadId:number;
+  fileName:string;
+  filePath:string;
+}
+export interface ClientAccessDocuments {
+  userDocumentSectionId:number;
+  title:string;
+  sortId:number;
+  uploads:UploadDocumentsType[]
+
+}
+
 export interface ParentCategories {
   lookupId?: number;
   categoryId?: number;

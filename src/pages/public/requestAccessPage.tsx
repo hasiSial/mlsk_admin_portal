@@ -19,7 +19,12 @@ const RequestAccessPage = () => {
   const dispatch = useAppDispatch();
 
   const requestAccessForm = useForm({ mode: 'onChange' });
-  const { setValue, register, handleSubmit } = requestAccessForm;
+  const {
+    setValue,
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = requestAccessForm;
 
   const onSubmit = async (data: any) => {
     try {
@@ -116,9 +121,10 @@ const RequestAccessPage = () => {
               </div>
 
               <div className="col-span-1 sm:col-span-2">
-                <Button type="submit" className="w-full h-[54px] bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg shadow-md transition-all duration-300">
-                  Send Request
+                <Button disabled={isSubmitting} type="submit" className="w-full h-[54px] bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg shadow-md transition-all duration-300">
+                  {isSubmitting ? 'Sending...' : 'Send Request'}
                 </Button>
+
               </div>
             </form>
           </FormProvider>

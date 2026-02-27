@@ -1,3 +1,4 @@
+import { AlertDialogProvider } from '@/common/customAlert';
 import Loader from '@/components/ui/loader/Loader';
 import AuthGuard from '@/layouts/authGuard';
 import LayoutWrapper from '@/layouts/layoutsWrapper';
@@ -83,9 +84,10 @@ const RoutesComponent: React.FC = () => {
         </Route>
 
         {/* ================= PUBLIC CLIENT PAGE (NO LOGIN) ================= */}
-        {/*  */}
-        <Route path="/user/access-client-account/:uuid" element={<AccessClientData />} />
+        {/*  tabs page*/}
+        <Route path="/user/access-client-account/:uuid" element={<AlertDialogProvider><AccessClientData /></AlertDialogProvider>} />
         <Route path="/public/:uuid/:categoryId/specific-access-client-data/:isParentCategory/:categoryName/:familyId" element={<AccessSpecificClientCategoryData />} />
+        {/* form */}
         <Route path="/user/access-account/:uuid" element={<RequestAccess />} />
         <Route path="/user/access-account/:uuid/dependents" element={<AccessClientDependents />} />
       </Routes>
